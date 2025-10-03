@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.lunchtray.ui.theme
+package com.example.depositapp.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -97,7 +97,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun LunchTrayTheme(
+fun DepositAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+, turned off for training purposes
     dynamicColor: Boolean = false,

@@ -15,5 +15,5 @@
   ~ limitations under the License.
   -->
 <resources>
-    <style name="Theme.LunchTray" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.DepositApp" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

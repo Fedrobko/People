@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.lunchtray
+package com.example.depositapp.model
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import com.example.lunchtray.ui.theme.LunchTrayTheme
+data class DepositData(
+    val initialDeposit: String = "",
+    val annualRate: String = "",
+    val monthlyDeposit: String = "",
+    val months: String = ""
+)
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            LunchTrayTheme {
-                LunchTrayApp()
-            }
-        }
-    }
-}
+data class CalculationResult(
+    val totalAmount: Double = 0.0,
+    val income: Double = 0.0,
+    val incomePercentage: Double = 0.0,
+    val initialDeposit: Double = 0.0,
+    val totalDeposits: Double = 0.0
+)

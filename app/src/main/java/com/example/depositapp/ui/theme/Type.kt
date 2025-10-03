@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.lunchtray.model
+package com.example.depositapp.ui.theme
 
-data class OrderUiState(
-    // Entree Selection
-    val entree: MenuItem.EntreeItem? = null,
-    val sideDish: MenuItem.SideDishItem? = null,
-    val accompaniment: MenuItem.AccompanimentItem? = null,
-    val itemTotalPrice: Double = 0.0,
-    val orderTax: Double = 0.0,
-    val orderTotalPrice: Double = 0.0
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
+// Set of Material typography styles to start with
+val Typography = Typography(
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
+    )
 )

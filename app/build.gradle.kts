@@ -20,11 +20,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.lunchtray"
+    namespace = "com.example.depositapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.lunchtray"
+        applicationId = "com.example.depositapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

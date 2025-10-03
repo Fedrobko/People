@@ -14,18 +14,28 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name">Lunch Tray</string>
-    <string name="back_button">Back</string>
-    <string name="cancel">Cancel</string>
-    <string name="choose_accompaniment">Choose Accompaniment</string>
-    <string name="choose_entree">Choose Entree</string>
-    <string name="choose_side_dish">Choose Side Dish</string>
-    <string name="next">Next</string>
-    <string name="order_checkout">Order Checkout</string>
-    <string name="start_order">Start Order</string>
-    <string name="order_summary">Order Summary</string>
-    <string name="subtotal">Subtotal: %s</string>
-    <string name="tax">Tax: %s</string>
-    <string name="total">Total: %s</string>
-    <string name="submit">Submit</string>
+    <string name="app_name">Калькулятор вклада</string>
+    <string name="calculate_deposit">Рассчитать вклад</string>
+    <string name="initial_deposit">Первоначальный взнос</string>
+    <string name="annual_rate">Годовая процентная ставка (%)</string>
+    <string name="monthly_deposit">Ежемесячное пополнение</string>
+    <string name="months">Период в месяцах</string>
+    <string name="next">Далее</string>
+    <string name="cancel">Отмена</string>
+    <string name="calculate">Рассчитать</string>
+    <string name="start_over">Новый расчет</string>
+    <string name="back">Назад</string>
+    <string name="calculator_title">Калькулятор вклада</string>
+    <string name="initial_data">Первоначальные данные</string>
+    <string name="monthly_data">Ежемесячные данные</string>
+    <string name="result">Результат</string>
+    <string name="total_amount">Итоговая сумма:</string>
+    <string name="income">Доход:</string>
+    <string name="income_percentage">Процент дохода:</string>
+    <string name="deposit_parameters">Параметры вклада:</string>
+    <string name="initial_deposit_label">Первоначальный взнос:</string>
+    <string name="monthly_deposit_label">Ежемесячное пополнение:</string>
+    <string name="period_label">Срок:</string>
+    <string name="annual_rate_label">Годовая ставка:</string>
+    <string name="calculation_error">Ошибка расчета. Проверьте введенные данные.</string>
 </resources>
