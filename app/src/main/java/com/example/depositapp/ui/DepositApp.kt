@@ -83,6 +83,7 @@ fun DepositApp() {
             }
             composable(route = DepositScreen.InitialDeposit.name) {
                 InitialDepositScreen(
+                    viewModel = viewModel,
                     onCancelButtonClicked = {
                         navController.popBackStack(DepositScreen.Start.name, inclusive = false)
                     },
@@ -94,6 +95,7 @@ fun DepositApp() {
             }
             composable(route = DepositScreen.MonthlyDeposit.name) {
                 MonthlyDepositScreen(
+                    viewModel = viewModel,
                     onCancelButtonClicked = {
                         navController.popBackStack(DepositScreen.Start.name, inclusive = false)
                     },
@@ -105,6 +107,7 @@ fun DepositApp() {
             }
             composable(route = DepositScreen.Result.name) {
                 ResultScreen(
+                    viewModel = viewModel,
                     onCancelButtonClicked = {
                         navController.popBackStack(DepositScreen.Start.name, inclusive = false)
                     },

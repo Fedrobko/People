@@ -50,15 +50,12 @@ fun StartScreen(
 
 @Composable
 fun InitialDepositScreen(
+    viewModel: DepositViewModel,
     onCancelButtonClicked: () -> Unit,
     onNextButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val viewModel: DepositViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     val uiState by viewModel.uiState.collectAsState()
-
-    var initialDeposit by remember { mutableStateOf(uiState.depositData.initialDeposit) }
-    var annualRate by remember { mutableStateOf(uiState.depositData.annualRate) }
 
     Column(
         modifier = modifier
@@ -67,8 +64,10 @@ fun InitialDepositScreen(
         verticalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
-            value = initialDeposit,
-            onValueChange = { initialDeposit = it },
+            value = uiState.depositData.initialDeposit, // Используем состояние из ViewModel напрямую
+            onValueChange = { newValue ->
+                viewModel.updateInitialDeposit(newValue, uiState.depositData.annualRate)
+            },
             label = { Text(stringResource(R.string.initial_deposit)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             modifier = Modifier
@@ -77,8 +76,10 @@ fun InitialDepositScreen(
         )
 
         OutlinedTextField(
-            value = annualRate,
-            onValueChange = { annualRate = it },
+            value = uiState.depositData.annualRate, // Используем состояние из ViewModel напрямую
+            onValueChange = { newValue ->
+                viewModel.updateInitialDeposit(uiState.depositData.initialDeposit, newValue)
+            },
             label = { Text(stringResource(R.string.annual_rate)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             modifier = Modifier
@@ -98,10 +99,10 @@ fun InitialDepositScreen(
 
             Button(
                 onClick = {
-                    viewModel.updateInitialDeposit(initialDeposit, annualRate)
                     onNextButtonClicked()
                 },
-                enabled = initialDeposit.isNotBlank() && annualRate.isNotBlank()
+                enabled = uiState.depositData.initialDeposit.isNotBlank() &&
+                        uiState.depositData.annualRate.isNotBlank()
             ) {
                 Text(stringResource(R.string.next))
             }
@@ -111,15 +112,12 @@ fun InitialDepositScreen(
 
 @Composable
 fun MonthlyDepositScreen(
+    viewModel: DepositViewModel,
     onCancelButtonClicked: () -> Unit,
     onNextButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val viewModel: DepositViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     val uiState by viewModel.uiState.collectAsState()
-
-    var monthlyDeposit by remember { mutableStateOf(uiState.depositData.monthlyDeposit) }
-    var months by remember { mutableStateOf(uiState.depositData.months) }
 
     Column(
         modifier = modifier
@@ -128,8 +126,10 @@ fun MonthlyDepositScreen(
         verticalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
-            value = monthlyDeposit,
-            onValueChange = { monthlyDeposit = it },
+            value = uiState.depositData.monthlyDeposit, // Используем состояние из ViewModel напрямую
+            onValueChange = { newValue ->
+                viewModel.updateMonthlyDeposit(newValue, uiState.depositData.months)
+            },
             label = { Text(stringResource(R.string.monthly_deposit)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             modifier = Modifier
@@ -138,8 +138,10 @@ fun MonthlyDepositScreen(
         )
 
         OutlinedTextField(
-            value = months,
-            onValueChange = { months = it },
+            value = uiState.depositData.months, // Используем состояние из ViewModel напрямую
+            onValueChange = { newValue ->
+                viewModel.updateMonthlyDeposit(uiState.depositData.monthlyDeposit, newValue)
+            },
             label = { Text(stringResource(R.string.months)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
@@ -159,10 +161,10 @@ fun MonthlyDepositScreen(
 
             Button(
                 onClick = {
-                    viewModel.updateMonthlyDeposit(monthlyDeposit, months)
                     onNextButtonClicked()
                 },
-                enabled = monthlyDeposit.isNotBlank() && months.isNotBlank()
+                enabled = uiState.depositData.monthlyDeposit.isNotBlank() &&
+                        uiState.depositData.months.isNotBlank()
             ) {
                 Text(stringResource(R.string.calculate))
             }
@@ -173,11 +175,12 @@ fun MonthlyDepositScreen(
 @SuppressLint("DefaultLocale")
 @Composable
 fun ResultScreen(
+    viewModel: DepositViewModel,
     onCancelButtonClicked: () -> Unit,
     onStartOverButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val viewModel: DepositViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+
     val uiState by viewModel.uiState.collectAsState()
     val result = uiState.calculationResult
 
@@ -189,7 +192,7 @@ fun ResultScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        if (result != null) {
+        if (result != null && result.totalAmount > 0) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()

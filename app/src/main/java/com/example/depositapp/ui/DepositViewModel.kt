@@ -15,12 +15,14 @@ class DepositViewModel : ViewModel() {
     val uiState: StateFlow<DepositUiState> = _uiState.asStateFlow()
 
     fun updateInitialDeposit(deposit: String, rate: String) {
+        println("DEBUG: Updating initial deposit: $deposit, rate: $rate")
         _uiState.value = _uiState.value.copy(
             depositData = _uiState.value.depositData.copy(
                 initialDeposit = deposit,
                 annualRate = rate
             )
         )
+        println("DEBUG: Current state: ${_uiState.value}")
     }
 
     fun updateMonthlyDeposit(monthlyDeposit: String, months: String) {
