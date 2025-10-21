@@ -32,6 +32,7 @@ import com.example.depositapp.R
 @Composable
 fun StartScreen(
     onStartButtonClicked: () -> Unit,
+    onViewDepositsButtonClicked: () -> Unit, // НОВЫЙ ПАРАМЕТР
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -43,7 +44,14 @@ fun StartScreen(
             onClick = onStartButtonClicked,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(text = stringResource( R.string.calculate_deposit))
+            Text(text = stringResource(R.string.calculate_deposit))
+        }
+        // НОВАЯ КНОПКА
+        Button(
+            onClick = onViewDepositsButtonClicked,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = stringResource(R.string.view_deposits))
         }
     }
 }
@@ -176,12 +184,12 @@ fun MonthlyDepositScreen(
 @Composable
 fun ResultScreen(
     viewModel: DepositViewModel,
-    onCancelButtonClicked: () -> Unit,
     onStartOverButtonClicked: () -> Unit,
+    onSaveButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val uiState by viewModel.uiState.collectAsState()
+    val saveMessage by viewModel.saveMessage.collectAsState()
     val result = uiState.calculationResult
 
     val numberFormat = remember { NumberFormat.getCurrencyInstance() }
@@ -192,6 +200,23 @@ fun ResultScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
+        // ОТОБРАЖЕНИЕ СООБЩЕНИЯ О СОХРАНЕНИИ
+        if (saveMessage != null) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            ) {
+                Text(
+                    text = saveMessage!!,
+                    modifier = Modifier.padding(16.dp),
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
         if (result != null && result.totalAmount > 0) {
             Card(
                 modifier = Modifier
@@ -220,7 +245,7 @@ fun ResultScreen(
                     )
 
                     InfoRow(stringResource(R.string.initial_deposit_label), numberFormat.format(result.initialDeposit))
-                    InfoRow(stringResource(R.string.monthly_deposit_label), numberFormat.format(uiState.depositData.monthlyDeposit.toDouble()))
+                    InfoRow(stringResource(R.string.monthly_deposit_label), numberFormat.format(uiState.depositData.monthlyDeposit.toDoubleOrNull() ?: 0.0))
                     InfoRow(stringResource(R.string.period_label), "${uiState.depositData.months} месяцев")
                     InfoRow(stringResource(R.string.annual_rate_label), "${uiState.depositData.annualRate}%")
                 }
@@ -238,15 +263,26 @@ fun ResultScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = onCancelButtonClicked) {
-                Text(stringResource(R.string.cancel))
+            // ОДНА КНОПКА "НА ГЛАВНУЮ" вместо двух
+            Button(
+                onClick = {
+                    viewModel.resetDeposit()
+                    onStartOverButtonClicked()
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.to_home))
             }
 
-            Button(onClick = {
-                viewModel.resetDeposit()
-                onStartOverButtonClicked()
-            }) {
-                Text(stringResource(R.string.start_over))
+            Spacer(modifier = Modifier.width(16.dp))
+
+            // КНОПКА СОХРАНЕНИЯ
+            Button(
+                onClick = onSaveButtonClicked,
+                enabled = result != null && result.totalAmount > 0,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Сохранить")
             }
         }
     }

@@ -38,4 +38,7 @@
     <string name="period_label">Срок:</string>
     <string name="annual_rate_label">Годовая ставка:</string>
     <string name="calculation_error">Ошибка расчета. Проверьте введенные данные.</string>
+    <string name="view_deposits">Перейти в список вкладов</string>
+    <string name="deposit_list">Список вкладов</string>
+    <string name="to_home">На главную</string>
 </resources>
