@@ -20,7 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "deposit_database"
                 )
-                    .fallbackToDestructiveMigration() // Добавляем для стабильности
+                    .fallbackToDestructiveMigration(false)
                     .build()
                     .also { Instance = it }
             }

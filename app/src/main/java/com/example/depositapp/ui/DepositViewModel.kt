@@ -16,7 +16,6 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
     private val _uiState = MutableStateFlow(DepositUiState())
     val uiState: StateFlow<DepositUiState> = _uiState.asStateFlow()
 
-    // Для отображения сообщения о сохранении
     private val _saveMessage = MutableStateFlow<String?>(null)
     val saveMessage: StateFlow<String?> = _saveMessage.asStateFlow()
 
@@ -80,7 +79,6 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
         }
     }
 
-    // ФУНКЦИЯ СОХРАНЕНИЯ
     fun saveDeposit() {
         viewModelScope.launch {
             val result = _uiState.value.calculationResult
@@ -101,7 +99,6 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
                     repository.insertDeposit(depositEntity)
                     _saveMessage.value = "Вклад успешно сохранен!"
 
-                    // Автоматически очищаем сообщение через 3 секунды
                     launch {
                         kotlinx.coroutines.delay(3000)
                         _saveMessage.value = null

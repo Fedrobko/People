@@ -32,7 +32,7 @@ import com.example.depositapp.R
 @Composable
 fun StartScreen(
     onStartButtonClicked: () -> Unit,
-    onViewDepositsButtonClicked: () -> Unit, // НОВЫЙ ПАРАМЕТР
+    onViewDepositsButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -46,7 +46,6 @@ fun StartScreen(
         ) {
             Text(text = stringResource(R.string.calculate_deposit))
         }
-        // НОВАЯ КНОПКА
         Button(
             onClick = onViewDepositsButtonClicked,
             modifier = Modifier.padding(16.dp)
@@ -72,7 +71,7 @@ fun InitialDepositScreen(
         verticalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
-            value = uiState.depositData.initialDeposit, // Используем состояние из ViewModel напрямую
+            value = uiState.depositData.initialDeposit,
             onValueChange = { newValue ->
                 viewModel.updateInitialDeposit(newValue, uiState.depositData.annualRate)
             },
@@ -84,7 +83,7 @@ fun InitialDepositScreen(
         )
 
         OutlinedTextField(
-            value = uiState.depositData.annualRate, // Используем состояние из ViewModel напрямую
+            value = uiState.depositData.annualRate,
             onValueChange = { newValue ->
                 viewModel.updateInitialDeposit(uiState.depositData.initialDeposit, newValue)
             },
@@ -134,7 +133,7 @@ fun MonthlyDepositScreen(
         verticalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
-            value = uiState.depositData.monthlyDeposit, // Используем состояние из ViewModel напрямую
+            value = uiState.depositData.monthlyDeposit,
             onValueChange = { newValue ->
                 viewModel.updateMonthlyDeposit(newValue, uiState.depositData.months)
             },
@@ -146,7 +145,7 @@ fun MonthlyDepositScreen(
         )
 
         OutlinedTextField(
-            value = uiState.depositData.months, // Используем состояние из ViewModel напрямую
+            value = uiState.depositData.months,
             onValueChange = { newValue ->
                 viewModel.updateMonthlyDeposit(uiState.depositData.monthlyDeposit, newValue)
             },
@@ -200,7 +199,6 @@ fun ResultScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        // ОТОБРАЖЕНИЕ СООБЩЕНИЯ О СОХРАНЕНИИ
         if (saveMessage != null) {
             Card(
                 modifier = Modifier
@@ -263,7 +261,6 @@ fun ResultScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // ОДНА КНОПКА "НА ГЛАВНУЮ" вместо двух
             Button(
                 onClick = {
                     viewModel.resetDeposit()
@@ -276,7 +273,6 @@ fun ResultScreen(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // КНОПКА СОХРАНЕНИЯ
             Button(
                 onClick = onSaveButtonClicked,
                 enabled = result != null && result.totalAmount > 0,

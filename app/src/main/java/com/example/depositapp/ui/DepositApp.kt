@@ -22,13 +22,12 @@ import com.example.depositapp.R
 import com.example.depositapp.data.AppDatabase
 import com.example.depositapp.data.DepositRepository
 
-// ОБНОВЛЕННЫЙ enum с новым экраном
 enum class DepositScreen(@StringRes val title: Int) {
     Start(R.string.calculator_title),
     InitialDeposit(R.string.initial_data),
     MonthlyDeposit(R.string.monthly_data),
     Result(R.string.result),
-    DepositList(R.string.deposit_list) // НОВЫЙ ЭКРАН
+    DepositList(R.string.deposit_list)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,17 +63,14 @@ fun DepositApp() {
         backStackEntry?.destination?.route ?: DepositScreen.Start.name
     )
 
-    // СОЗДАЕМ БАЗУ ДАННЫХ И РЕПОЗИТОРИЙ
     val context = LocalContext.current
     val database = remember { AppDatabase.getDatabase(context) }
     val repository = remember { DepositRepository(database.depositDao()) }
 
-    // СОЗДАЕМ VIEWMODEL С РЕПОЗИТОРИЕМ
     val depositViewModel: DepositViewModel = viewModel(
         factory = DepositViewModelFactory(repository)
     )
 
-    // СОЗДАЕМ VIEWMODEL ДЛЯ СПИСКА ВКЛАДОВ
     val depositListViewModel: DepositListViewModel = viewModel(
         factory = DepositListViewModelFactory(repository)
     )
@@ -98,7 +94,7 @@ fun DepositApp() {
                     onStartButtonClicked = {
                         navController.navigate(DepositScreen.InitialDeposit.name)
                     },
-                    onViewDepositsButtonClicked = { // НОВАЯ КНОПКА
+                    onViewDepositsButtonClicked = {
                         navController.navigate(DepositScreen.DepositList.name)
                     },
                     modifier = Modifier.fillMaxSize()
@@ -140,7 +136,6 @@ fun DepositApp() {
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            // НОВЫЙ ЭКРАН СПИСКА ВКЛАДОВ
             composable(route = DepositScreen.DepositList.name) {
                 DepositListScreen(
                     viewModel = depositListViewModel,
@@ -151,7 +146,6 @@ fun DepositApp() {
     }
 }
 
-// ФАБРИКИ ДЛЯ СОЗДАНИЯ VIEWMODEL С ПАРАМЕТРАМИ
 class DepositViewModelFactory(private val repository: DepositRepository) :
     androidx.lifecycle.ViewModelProvider.Factory {
     override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
